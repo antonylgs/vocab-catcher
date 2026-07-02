@@ -1,6 +1,4 @@
 #!/usr/bin/env bash
-# Install/uninstall vocab-catcher as a macOS launchd user agent.
-# Paths are resolved dynamically, so it works wherever the project lives.
 set -euo pipefail
 
 LABEL="com.ags.vocab-catcher"
@@ -19,7 +17,6 @@ if [[ "${1:-}" == "uninstall" ]]; then
     exit 0
 fi
 
-# Prefer the project's venv python, fall back to `uv run` resolution.
 if [[ -x "$DIR/.venv/bin/python3" ]]; then
     PYTHON="$DIR/.venv/bin/python3"
 else
