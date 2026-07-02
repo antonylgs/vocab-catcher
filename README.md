@@ -51,3 +51,20 @@ uv run bot.py
 Then message your bot on Telegram with a word (e.g. `사랑`, `annyeong`, or a
 plain English description). It replies `Saved: ...` once the note is written to
 your vault.
+
+## Run as a background service (macOS)
+
+To keep the bot running and auto-start it at login, install it as a launchd
+user agent. Paths are resolved dynamically, so it works from wherever the
+project lives:
+
+```bash
+./install-service.sh
+```
+
+This generates `~/Library/LaunchAgents/com.ags.vocab-catcher.plist` from the
+template and loads it. To stop and remove it:
+
+```bash
+./install-service.sh uninstall
+```
