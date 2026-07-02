@@ -31,17 +31,25 @@ SYSTEM_INSTRUCTION = (
     "(e.g. if the sentence conjugates or inflects the word, form_ko is that exact surface form)."
 )
 
-client = genai.Client(api_key=os.environ["GEMINI_API_KEY"])
+GENAI_TIMEOUT = 60
+
+client = genai.Client(
+    api_key=os.environ["GEMINI_API_KEY"],
+    http_options=genai.types.HttpOptions(timeout=GENAI_TIMEOUT * 1000),
+)
 
 
-def enrich(text: str) -> dict:
-    resp = client.models.generate_content(
-        model=os.environ["MODEL"],
-        contents=text,
-        config=genai.types.GenerateContentConfig(
-            system_instruction=SYSTEM_INSTRUCTION,
-            response_mime_type="application/json",
+async def enrich(text: str) -> dict:
+    resp = await asyncio.wait_for(
+        client.aio.models.generate_content(
+            model=os.environ["MODEL"],
+            contents=text,
+            config=genai.types.GenerateContentConfig(
+                system_instruction=SYSTEM_INSTRUCTION,
+                response_mime_type="application/json",
+            ),
         ),
+        timeout=GENAI_TIMEOUT + 5,
     )
 
     return json.loads(resp.text)
@@ -74,7 +82,7 @@ async def handle(update: Update, context: ContextTypes.DEFAULT_TYPE):
     word = update.message.text.strip()
     log.info("processing: %s", word)
     try:
-        e = enrich(word)
+        e = await enrich(word)
         note = build_note(e)
         (VAULT / f"{e['hangul']}.md").write_text(note, encoding="utf-8")
     except Exception:
