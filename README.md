@@ -1,5 +1,3 @@
-# ags-korean-bot
-
 A Telegram bot that turns new words into Obsidian flashcards.
 
 Frictionless language learning for everyday life. Message the bot a word you just
