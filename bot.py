@@ -12,14 +12,15 @@ load_dotenv()
 TOKEN = os.environ["TELEGRAM_TOKEN"]
 VAULT = Path(os.environ["OBSIDIAN_VAULT_PATH"]).expanduser()
 VAULT.mkdir(parents=True, exist_ok=True)
+LANGUAGE = os.environ.get("LANGUAGE", "Korean")
 
 SYSTEM_INSTRUCTION = (
-    "You are a Korean tutor. The user sends a Korean word, romanization, "
+    f"You are a {LANGUAGE} tutor. The user sends a {LANGUAGE} word, romanization, "
     "or an English description. Reply with ONLY a JSON object with these "
     "string keys: hangul, romanization, meaning_en, example_ko, example_en, theme. "
     "'theme' must be a single lowercase category word. "
     "'form_ko' must be the exact surface form of the word as it literally appears in example_ko "
-    "(e.g. if hangul is 말하다 and the sentence uses 말하는, then form_ko is 말하는)."
+    "(e.g. if the sentence conjugates or inflects the word, form_ko is that exact surface form)."
 )
 
 client = genai.Client(api_key=os.environ["GEMINI_API_KEY"])
@@ -49,7 +50,7 @@ def build_note(e: dict) -> str:
         f"# {e['romanization']}\n\n"
         f"**{e['meaning_en']}**\n\n"
         f"{e['example_en']}\n\n"
-        f"#flashcards/korean/{theme}\n\n"
+        f"#flashcards/{LANGUAGE.lower()}/{theme}\n\n"
         f"{e['hangul']}::{e['meaning_en']}\n\n"
     )
 
