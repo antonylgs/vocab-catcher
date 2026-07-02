@@ -17,7 +17,7 @@ LANGUAGE = os.environ.get("LANGUAGE", "Korean")
 SYSTEM_INSTRUCTION = (
     f"You are a {LANGUAGE} tutor. The user sends a {LANGUAGE} word, romanization, "
     "or an English description. Reply with ONLY a JSON object with these "
-    "string keys: hangul, romanization, meaning_en, example_ko, example_en, theme. "
+    "string keys: hangul, romanization, meaning_en, example_ko, example_en, theme, form_ko. "
     "'theme' must be a single lowercase category word. "
     "'form_ko' must be the exact surface form of the word as it literally appears in example_ko "
     "(e.g. if the sentence conjugates or inflects the word, form_ko is that exact surface form)."
@@ -44,7 +44,7 @@ def make_cloze(example_ko: str, form_ko: str) -> str | None:
 
 def build_note(e: dict) -> str:
     theme = e.get('theme', 'mix').strip().lower().replace(' ', '-')
-    cloze = make_cloze(e['example_ko'], e['form_ko'])
+    cloze = make_cloze(e.get('example_ko', ''), e.get('form_ko', ''))
 
     note = (
         f"# {e['romanization']}\n\n"
