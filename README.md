@@ -54,6 +54,8 @@ your vault.
 
 ## Run as a background service (macOS)
 
+Use the [`macos-background-service`](https://github.com/antonylgs/vocab-catcher/tree/macos-background-service) branch
+
 To keep the bot running and auto-start it at login, install it as a launchd
 user agent. Paths are resolved dynamically, so it works from wherever the
 project lives:
