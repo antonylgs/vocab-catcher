@@ -26,6 +26,9 @@ For each word it saves a note in your vault with:
 - A `word::meaning` flashcard
 - A cloze (fill-in-the-blank) card using the word in the example sentence
 
+> Flashcards require the [Spaced Repetition](https://github.com/st3v3nmw/obsidian-spaced-repetition)
+> community plugin in Obsidian. Install and enable it to review the cards.
+
 ## Setup
 
 1. **Requirements**: Python 3.13+ and [uv](https://docs.astral.sh/uv/).
