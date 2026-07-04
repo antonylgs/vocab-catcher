@@ -8,6 +8,14 @@ into your Obsidian vault, ready for the Spaced Repetition plugin.
 The target language is set with the `LANGUAGE` variable, so the same bot works for
 Korean, Japanese, Spanish, or anything else, just change one line.
 
+## Contents
+
+- [What you get per word](#what-you-get-per-word)
+- [Setup](#setup)
+- [Run](#run)
+- [Run as a background service (macOS)](#run-as-a-background-service-macos)
+- [Run on an always-on server (VPS)](#run-on-an-always-on-server-vps)
+
 ## What you get per word
 
 For each word it saves a note in your vault with:
