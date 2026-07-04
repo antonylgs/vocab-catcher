@@ -9,6 +9,8 @@ from google import genai
 from telegram import Update
 from telegram.ext import ApplicationBuilder, ContextTypes, MessageHandler, filters
 
+from vault_sync import sync_to_git
+
 
 logging.basicConfig(
     level=logging.INFO,
@@ -85,6 +87,7 @@ async def handle(update: Update, context: ContextTypes.DEFAULT_TYPE):
         e = await enrich(word)
         note = build_note(e)
         (VAULT / f"{e['hangul']}.md").write_text(note, encoding="utf-8")
+        await sync_to_git(VAULT, f"{e['hangul']}.md")
     except Exception:
         log.exception("failed to process %r", word)
         await update.message.reply_text(f"Failed to process: {word}")
