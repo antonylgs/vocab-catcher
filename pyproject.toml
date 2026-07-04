@@ -1,7 +1,7 @@
 [project]
-name = "ags-korean-bot"
+name = "vocab-catcher"
 version = "0.1.0"
-description = "Add your description here"
+description = "Telegram bot that turns words into Obsidian flashcards via Gemini"
 readme = "README.md"
 requires-python = ">=3.13"
 dependencies = [
